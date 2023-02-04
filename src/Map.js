@@ -11,7 +11,7 @@ import {
     IconButton,
     Input,
     Text,
-    Modal, CloseButton,
+    Modal, CloseButton, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalContent, ModalFooter,
 } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes} from 'react-icons/fa'
 import {RiAlarmWarningFill} from 'react-icons/ri'
@@ -171,21 +171,23 @@ function MyComponent() {
                 </HStack>
             </Box>
             {showWindow && (
-                <div
-                    style={{
-                        background: "lightgrey",
-                        padding: "20px",
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: "500px",
-                        height: "300px",
-                    }}
-                >
-                    <h3>Information</h3>
-                    <p>This is some information that you can display in the window</p>
-                </div>
+                <Modal isOpen={showWindow} onClose={() => setShowWindow(!showWindow)}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Modal Title</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <p>Modal Body</p>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme="blue" mr={3} onClick={() => setShowWindow(!showWindow)}>
+                                Close
+                            </Button>
+                            <Button variant="ghost">Secondary Action</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
             )}
         </Flex>
     ) : <></>
