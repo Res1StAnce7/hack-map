@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { useRef } from 'react'
 import {GoogleMap, useJsApiLoader, Autocomplete,
-    DirectionsRenderer, Marker, HeatmapLayer} from '@react-google-maps/api';
+    DirectionsRenderer, Marker, HeatmapLayer, InfoWindow} from '@react-google-maps/api';
 import {
     Box,
     Button,
@@ -30,7 +30,8 @@ function MyComponent() {
         libraries:['places', 'directions', 'geometry', 'visualization']
     })
 
-    const [isOpen, setIsOpen] = React.useState(false);    const [center, setCenter] = React.useState({ lat: null, lng: null })
+    const [showWindow, setShowWindow] = React.useState(false)
+    const [center, setCenter] = React.useState({ lat: null, lng: null })
     const [map, setMap] = React.useState(null)
     const [distance, setDistance] = React.useState('--')
     const [duration, setDuration] = React.useState('--')
@@ -150,21 +151,14 @@ function MyComponent() {
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
+
                     <IconButton
-                        aria-label='info'
+                        aria-label='center back'
                         icon={<RiAlarmWarningFill />}
-                        isRound
-                        onClick={() => setIsOpen(!isOpen)}
-                    />
-                    {isOpen && (
-                        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-                            <Box p={6}>
-                                <CloseButton onClick={() => setIsOpen(false)} />
-                                <h1>This is the Modal Window</h1>
-                                <p>You can put any content you want in here.</p>
-                            </Box>
-                        </Modal>
-                    )}
+                        onClick={() => setShowWindow(!showWindow)}
+                    >
+                        Show/Hide Window
+                    </IconButton>
                     <IconButton
                         aria-label='center back'
                         icon={<FaLocationArrow />}
@@ -176,6 +170,23 @@ function MyComponent() {
                     />
                 </HStack>
             </Box>
+            {showWindow && (
+                <div
+                    style={{
+                        background: "lightgrey",
+                        padding: "20px",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: "500px",
+                        height: "300px",
+                    }}
+                >
+                    <h3>Information</h3>
+                    <p>This is some information that you can display in the window</p>
+                </div>
+            )}
         </Flex>
     ) : <></>
 }
