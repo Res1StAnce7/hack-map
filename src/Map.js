@@ -11,7 +11,7 @@ import {
     IconButton,
     Input,
     Text,
-    Modal, CloseButton, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalContent, ModalFooter,
+    Modal, CloseButton, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalContent, ModalFooter, Checkbox,
 } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes} from 'react-icons/fa'
 import {RiAlarmWarningFill} from 'react-icons/ri'
@@ -35,13 +35,13 @@ function MyComponent() {
     const [distance, setDistance] = React.useState('--')
     const [duration, setDuration] = React.useState('--')
     const [directionsResponse, setDirectionsResponse] = React.useState(null)
-    const [data, setData] = React.useState(null)
+    const [currentLocation, setCurrentLocation] = React.useState(null);
+
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
     /** @type React.MutableRefObject<HTMLInputElement> */
-    const destiantionRef = useRef()
+    const destinationRef = useRef()
     const heatmapRef = useRef();
-
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -51,6 +51,7 @@ function MyComponent() {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
                     });
+                    setCurrentLocation(position.coords);
                 },
                 (error) => {
                     console.error("Error: ", error);
@@ -61,15 +62,16 @@ function MyComponent() {
         }
     }, []);
 
+
     async function calculateRoute() {
-        if (originRef.current.value === '' || destiantionRef.current.value === '') {
+        if (destinationRef.current.value === '') {
             return
         }
         // eslint-disable-next-line no-undef
         const directionsService = new google.maps.DirectionsService()
         const results = await directionsService.route({
-            origin: originRef.current.value,
-            destination: destiantionRef.current.value,
+            origin: originRef.current.value === '' ? center : originRef.current.value,
+            destination: destinationRef.current.value,
             // eslint-disable-next-line no-undef
             travelMode: google.maps.TravelMode.WALKING,
         })
@@ -83,7 +85,7 @@ function MyComponent() {
         setDuration('')
         setDirectionsResponse(null)
         originRef.current.value = ''
-        destiantionRef.current.value = ''
+        destinationRef.current.value = ''
     }
 
     return isLoaded ? (
@@ -102,11 +104,9 @@ function MyComponent() {
                     // onLoad={onLoad}
                     onLoad={map => setMap(map)}
                 >
-
                     {/*<HeatmapLayer data={heatMapData} />*/}
                     {center.lat !== null && center.lng !== null && (
-                        <Marker
-                            position={center}
+                        <Marker position={center}
                             icon={{
                                 url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                             }}
@@ -134,12 +134,12 @@ function MyComponent() {
                 <HStack spacing={2} justifyContent='space-between'>
                     <Box flexGrow={1} shadow={'sm'}>
                         <Autocomplete>
-                            <Input type='text' placeholder='Starting Point' ref={originRef} />
+                            <Input type='text' placeholder='Current Location' ref={originRef} />
                         </Autocomplete>
                     </Box>
                     <Box flexGrow={1} shadow={'sm'} >
                         <Autocomplete>
-                            <Input type='text' placeholder='Destination' ref={destiantionRef} />
+                            <Input type='text' placeholder='Destination' ref={destinationRef} />
                         </Autocomplete>
                     </Box>
                     <ButtonGroup>
@@ -156,13 +156,11 @@ function MyComponent() {
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
-
                     <IconButton
                         aria-label='center back'
                         icon={<RiAlarmWarningFill />}
                         onClick={() => setShowWindow(!showWindow)}
                     >
-                        Show/Hide Window
                     </IconButton>
                     <IconButton
                         aria-label='center back'
@@ -202,6 +200,5 @@ function MyComponent() {
 }
 
 export default React.memo(MyComponent)
-
 
 //AIzaSyCbibYU79CUknzovDk7S1ZGoBF9oCeEx9Y
