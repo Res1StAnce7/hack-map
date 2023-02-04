@@ -29,7 +29,6 @@ function MyComponent() {
         googleMapsApiKey: "AIzaSyCbibYU79CUknzovDk7S1ZGoBF9oCeEx9Y",
         libraries:['places', 'directions', 'geometry', 'visualization']
     })
-
     const [showWindow, setShowWindow] = React.useState(false)
     const [center, setCenter] = React.useState({ lat: null, lng: null })
     const [map, setMap] = React.useState(null)
@@ -72,10 +71,10 @@ function MyComponent() {
             origin: originRef.current.value,
             destination: destiantionRef.current.value,
             // eslint-disable-next-line no-undef
-            travelMode: google.maps.TravelMode.DRIVING,
+            travelMode: google.maps.TravelMode.WALKING,
         })
         setDirectionsResponse(results)
-        setDistance(results.routes[0].legs[0].distance.text)
+        setDistance(results.routes[0].legs[0].distance.text.replace('mi', 'miles'))
         setDuration(results.routes[0].legs[0].duration.text)
     }
 
@@ -103,9 +102,15 @@ function MyComponent() {
                     // onLoad={onLoad}
                     onLoad={map => setMap(map)}
                 >
+
                     {/*<HeatmapLayer data={heatMapData} />*/}
                     {center.lat !== null && center.lng !== null && (
-                        <Marker position={center} />
+                        <Marker
+                            position={center}
+                            icon={{
+                                url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                            }}
+                        />
                     )}
                     {directionsResponse && (
                         <DirectionsRenderer directions={directionsResponse} />
@@ -171,20 +176,23 @@ function MyComponent() {
                 </HStack>
             </Box>
             {showWindow && (
-                <Modal isOpen={showWindow} onClose={() => setShowWindow(!showWindow)}>
+                <Modal isOpen={showWindow} onClose={() => setShowWindow(false)}>
                     <ModalOverlay />
-                    <ModalContent>
+                    <ModalContent style={{textAlign: "center"}}>
                         <ModalHeader>Modal Title</ModalHeader>
                         <ModalCloseButton />
-                        <ModalBody>
-                            <p>Modal Body</p>
+                        <ModalBody style={{display: "flex", flexDirection: "column"}}>
+                            <Button variant="ghost">1</Button>
+                            <Button variant="ghost">2</Button>
+                            <Button variant="ghost">3</Button>
+                            <Button variant="ghost">4</Button>
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button colorScheme="blue" mr={3} onClick={() => setShowWindow(!showWindow)}>
-                                Close
-                            </Button>
-                            <Button variant="ghost">Secondary Action</Button>
+                            {/*<Button colorScheme="blue" mr={3} onClick={() => setShowWindow(!showWindow)}>*/}
+                            {/*    Close*/}
+                            {/*</Button>*/}
+                            {/*<Button variant="ghost">Secondary Action</Button>*/}
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
