@@ -103,6 +103,10 @@ function MyComponent() {
                     zoom={17}
                     // onLoad={onLoad}
                     onLoad={map => setMap(map)}
+                    options={{
+                        mapTypeControl: false
+                    }
+                    }
                 >
                     {/*<HeatmapLayer data={heatMapData} />*/}
                     {center.lat !== null && center.lng !== null && (
@@ -128,7 +132,7 @@ function MyComponent() {
                 minW='container.md'
                 zIndex='1'
                 position={'absolute'}
-                top={'3%'}
+                top={'0px'}
                 left={'0px'}
             >
                 <HStack spacing={2} justifyContent='space-between'>
