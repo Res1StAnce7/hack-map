@@ -1,5 +1,4 @@
-import React from 'react'
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import {GoogleMap, useJsApiLoader, Autocomplete, DirectionsRenderer,
     Marker, HeatmapLayer} from '@react-google-maps/api';
 import {Box, Button, ButtonGroup, Flex, HStack, IconButton, Input, Text,
@@ -112,7 +111,7 @@ function MyComponent() {
                 </GoogleMap>
             </Box>
             <Box p={5} borderRadius={"3xl"} m={5} bgColor='#FBFBF5' shadow='1px 2px 9px #ADD8E6'
-                minW='container.md' zIndex='1' position={'absolute'} top={'0px'} left={'0px'} width={'800px'}>
+                minW='container.md' zIndex='1' position={'absolute'} top={'0px'} left={'0px'} width={'900px'}>
                 <HStack spacing={3} justifyContent='space-between'>
                     <Box flexGrow={1} shadow={'sm'}>
                         <Autocomplete>
