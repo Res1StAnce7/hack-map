@@ -7,6 +7,7 @@ import {Box, Button, ButtonGroup, Flex, HStack, IconButton, Input, Text,
 } from '@chakra-ui/react'
 import {FaLocationArrow, FaMap, FaTimes} from 'react-icons/fa'
 import {RiAlarmWarningFill} from 'react-icons/ri'
+import {WarningTwoIcon} from '@chakra-ui/icons'
 
 const containerStyle = {
     width: '100%',
@@ -67,7 +68,7 @@ function MyComponent() {
 
     function makeAndSetData() {
         if (!data) {
-            let file = require('./data.json');
+            let file = require('./file/data.json');
             file.forEach((item) => {
                 heatMapData.push({
                     // eslint-disable-next-line no-undef
@@ -141,15 +142,18 @@ function MyComponent() {
                         <IconButton
                             aria-label='center back'
                             icon={<RiAlarmWarningFill />}
-                            onClick={() => setShowWindowMain(!showWindowMain)}
-                        >
-                        </IconButton>
+                            isRound
+                        />
+                        <IconButton
+                            aria-label='center back'
+                            icon={<WarningTwoIcon />}
+                            isRound
+                            onClick={() => setShowWindowMain(!showWindowMain)}/>
                         <IconButton
                             aria-label='center back'
                             icon={<FaLocationArrow />}
                             isRound
-                            onClick={() => setCurrentLocation()}
-                        />
+                            onClick={() => setCurrentLocation()}/>
                         <IconButton
                             aria-label={'center back'}
                             icon={<FaMap />}
@@ -162,19 +166,28 @@ function MyComponent() {
                 <Modal isOpen={showWindowMain} onClose={() => setShowWindowMain(false)}>
                     <ModalOverlay />
                     <ModalContent style={{textAlign: "center", width: "500px", height: "500px"}}>
-                        <ModalHeader>Modal Title</ModalHeader>
+                        <ModalHeader>Threat Level</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody style={{display: "flex", flexDirection: "column"}}>
-                            <Button variant="ghost" colorScheme={"blue"} style={{height: "90px"}}
+                            <Button variant="ghost" colorScheme={"orange"}
+                                    style={{height: "90px", display: "flex", flexDirection: "column"}}
                                     onClick={() => setShowWindowSub1(!showWindowSub1)}>
-                                Report
-                            </Button>
-                            <Button variant="ghost" colorScheme={"yellow"} style={{marginTop: "50px", height: "90px"}}
-                                    onClick={() => setShowWindowSub2(!showWindowSub2)}>
+                                <img src={'https://freeiconshop.com/wp-content/uploads/edd/notification-flat.png'}
+                                     alt="Notify" style={{height: "90px"}}/>
                                 Notify
                             </Button>
-                            <Button variant="ghost" colorScheme={"red"} style={{marginTop: "50px", height: "90px"}}
+                            <Button variant="ghost" colorScheme={"red"}
+                                    style={{marginTop: "50px", height: "90px", display: "flex", flexDirection: "column"}}
+                                    onClick={() => setShowWindowSub2(!showWindowSub2)}>
+                                <img src={'https://cdn-icons-png.flaticon.com/512/9392/9392681.png'}
+                                     alt="Report" style={{height: "90px"}}/>
+                                Report
+                            </Button>
+                            <Button variant="ghost" colorScheme={"blue"}
+                                    style={{marginTop: "50px", height: "90px", display: "flex", flexDirection: "column"}}
                                 onClick={() => setShowWindowSub3(!showWindowSub3)}>
+                                <img src={'https://cdn-icons-png.flaticon.com/512/1548/1548322.png'}
+                                     alt="Emergency" style={{height: "90px"}}/>
                                 Emergency
                             </Button>
                         </ModalBody>
@@ -207,7 +220,7 @@ function MyComponent() {
                 <ModalOverlay />
                 <ModalContent style={{textAlign: "center", width: "500px", height: "500px"}}>
                     <ModalCloseButton />
-                    <ModalHeader>Emergy</ModalHeader>
+                    <ModalHeader>Emergency</ModalHeader>
                     <ModalBody style={{display: "flex", flexDirection: "column"}}>
                         <Text style={{marginTop:"150px"}}>Police is on the way</Text>
                     </ModalBody>
