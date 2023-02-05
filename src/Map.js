@@ -172,7 +172,7 @@ function MyComponent() {
                                     onClick={() => setShowWindowSub1(!showWindowSub1)}>
                                 1
                             </Button>
-                            <Button variant="ghost" colorScheme={"yellow"}mstyle={{marginTop: "50px", height: "90px"}}
+                            <Button variant="ghost" colorScheme={"yellow"} style={{marginTop: "50px", height: "90px"}}
                                     onClick={() => setShowWindowSub2(!showWindowSub2)}>
                                 2
                             </Button>
