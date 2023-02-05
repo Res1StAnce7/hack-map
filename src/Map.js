@@ -116,22 +116,35 @@ function MyComponent() {
                 <HStack spacing={3} justifyContent='space-between'>
                     <Box flexGrow={1} shadow={'sm'}>
                         <Autocomplete>
-                            <Input type='text' placeholder='Origin' ref={originRef} />
+                            <Input style={{height: 48}}
+                                   type='text'
+                                   placeholder='Origin'
+                                   ref={originRef}
+                            />
                         </Autocomplete>
                     </Box>
                     <Box flexGrow={1} shadow={'sm'} >
                         <Autocomplete>
-                            <Input type='text' placeholder='Destination' ref={destinationRef} />
+                            <Input style={{height: 48}}
+                                   type='text'
+                                   placeholder='Destination'
+                                   ref={destinationRef}
+                            />
                         </Autocomplete>
                     </Box>
                     <ButtonGroup>
-                        <Button colorScheme='blue'
-                                type='submit'
-                                style={{width: 180 }}
-                                onClick={calculateRoute}>
-                            Calculate Route
+                        <Button style={{height: 48, width: 180}}
+                            colorScheme='blue'
+                            type='submit'
+                            onClick={calculateRoute}
+                        >
+                            <Text style={{fontSize: "17px"}}>Calculate Route</Text>
                         </Button>
-                        <IconButton aria-label='center back' icon={<FaTimes />} onClick={clearRoute}/>
+                        <IconButton style={{height: 48, width: 48 }}
+                            aria-label='center back'
+                            icon={<FaTimes />}
+                            onClick={clearRoute}
+                        />
                     </ButtonGroup>
                 </HStack>
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
