@@ -13,7 +13,7 @@ import {
     Text,
     Modal, CloseButton, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalContent, ModalFooter, Checkbox,
 } from '@chakra-ui/react'
-import { FaLocationArrow, FaTimes} from 'react-icons/fa'
+import {FaLocationArrow, FaMap, FaTimes} from 'react-icons/fa'
 import {RiAlarmWarningFill} from 'react-icons/ri'
 
 const containerStyle = {
@@ -35,7 +35,8 @@ function MyComponent() {
     const [distance, setDistance] = React.useState('--')
     const [duration, setDuration] = React.useState('--')
     const [directionsResponse, setDirectionsResponse] = React.useState(null)
-    const [currentLocation, setCurrentLocation] = React.useState(null);
+    const [showHeatmap, setShowHeatmap] = React.useState(false);
+    const [data, setData] = React.useState(false);
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
@@ -51,7 +52,6 @@ function MyComponent() {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
                     });
-                    setCurrentLocation(position.coords);
                 },
                 (error) => {
                     console.error("Error: ", error);
@@ -88,6 +88,22 @@ function MyComponent() {
         destinationRef.current.value = ''
     }
 
+
+    function makeAndSetData() {
+        let heatMapData = [];
+        for (let i = 0; i < 100; i++) {
+            heatMapData.push({
+                // eslint-disable-next-line no-undef
+                location: new google.maps.LatLng(
+                    center.lat + Math.random() / 100,
+                    center.lng + Math.random() / 100
+                ),
+                weight: Math.random() * 100,
+            });
+        }
+        return heatMapData;
+    }
+
     return isLoaded ? (
         <Flex
             position='relative'
@@ -105,10 +121,9 @@ function MyComponent() {
                     onLoad={map => setMap(map)}
                     options={{
                         mapTypeControl: false
-                    }
-                    }
+                    }}
                 >
-                    {/*<HeatmapLayer data={heatMapData} />*/}
+                    {showHeatmap && <HeatmapLayer data={makeAndSetData()} ref={heatmapRef}/>}
                     {center.lat !== null && center.lng !== null && (
                         <Marker position={center}
                             icon={{
@@ -163,7 +178,7 @@ function MyComponent() {
                     <IconButton
                         aria-label='center back'
                         icon={<RiAlarmWarningFill />}
-                        onClick={() => setShowWindow(!showWindow)}
+                        onClick={() => setShowWindow(true)}
                     >
                     </IconButton>
                     <IconButton
@@ -175,6 +190,11 @@ function MyComponent() {
                             map.setZoom(17)
                         }}
                     />
+                    <IconButton
+                        aria-label={'center back'}
+                        icon={<FaMap />}
+                        isRound
+                        onClick={() => setShowHeatmap(!showHeatmap)}/>
                 </HStack>
             </Box>
             {showWindow && (
@@ -189,7 +209,6 @@ function MyComponent() {
                             <Button variant="ghost">3</Button>
                             <Button variant="ghost">4</Button>
                         </ModalBody>
-
                         <ModalFooter>
                             {/*<Button colorScheme="blue" mr={3} onClick={() => setShowWindow(!showWindow)}>*/}
                             {/*    Close*/}
