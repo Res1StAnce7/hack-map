@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { useRef } from 'react'
-import {GoogleMap, useJsApiLoader, Autocomplete,
-    DirectionsRenderer, Marker, HeatmapLayer} from '@react-google-maps/api';
+import {GoogleMap, useJsApiLoader, Autocomplete, DirectionsRenderer,
+    Marker, HeatmapLayer} from '@react-google-maps/api';
 import {Box, Button, ButtonGroup, Flex, HStack, IconButton, Input, Text,
     Modal, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalContent, Textarea,
 } from '@chakra-ui/react'
@@ -30,8 +30,8 @@ function MyComponent() {
     const [showWindowSub3, setShowWindowSub3] = React.useState(false)
     const [center, setCenter] = React.useState({lat: 40.756219, lng: -73.98641})
     const [map, setMap] = React.useState(null)
-    const [distance, setDistance] = React.useState('--')
-    const [duration, setDuration] = React.useState('--')
+    const [distance, setDistance] = React.useState('unknown')
+    const [duration, setDuration] = React.useState('unknown')
     const [directionsResponse, setDirectionsResponse] = React.useState(null)
     const [showHeatmap, setShowHeatmap] = React.useState(false);
     /** @type React.MutableRefObject<HTMLInputElement> */
