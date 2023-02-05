@@ -38,8 +38,6 @@ function MyComponent() {
     const originRef = useRef()
     /** @type React.MutableRefObject<HTMLInputElement> */
     const destinationRef = useRef()
-    const heatmapRef = useRef();
-
 
     async function calculateRoute() {
         if (destinationRef.current.value === '') {
@@ -100,7 +98,7 @@ function MyComponent() {
                         mapTypeControl: false,
                         streetViewControl: false
                     }}>
-                    {showHeatmap && <HeatmapLayer data={makeAndSetData()} ref={heatmapRef}/>}
+                    {showHeatmap && <HeatmapLayer data={makeAndSetData()} options={{opacity: 0.8}} />}
                     {center.lat !== null && center.lng !== null && (
                         <Marker position={center}
                             icon={{
@@ -108,9 +106,7 @@ function MyComponent() {
                             }}
                         />
                     )}
-                    {directionsResponse && (
-                        <DirectionsRenderer directions={directionsResponse} />
-                    )}
+                    {directionsResponse && (<DirectionsRenderer directions={directionsResponse} />)}
                 </GoogleMap>
             </Box>
             <Box p={5} borderRadius={"2xl"} m={5} bgColor='#FBFBF5' shadow='1px 2px 9px #ADD8E6'
