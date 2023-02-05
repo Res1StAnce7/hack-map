@@ -168,15 +168,15 @@ function MyComponent() {
                         <ModalHeader>Modal Title</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody style={{display: "flex", flexDirection: "column"}}>
-                            <Button variant="ghost" color="primary" style={{height: "90px"}}
+                            <Button variant="ghost" colorScheme={"blue"} style={{height: "90px"}}
                                     onClick={() => setShowWindowSub1(!showWindowSub1)}>
                                 1
                             </Button>
-                            <Button variant="ghost" style={{marginTop: "50px", height: "90px"}}
+                            <Button variant="ghost" colorScheme={"yellow"}mstyle={{marginTop: "50px", height: "90px"}}
                                     onClick={() => setShowWindowSub2(!showWindowSub2)}>
                                 2
                             </Button>
-                            <Button variant="ghost" style={{marginTop: "50px", height: "90px"}}
+                            <Button variant="ghost" colorScheme={"red"} style={{marginTop: "50px", height: "90px"}}
                                 onClick={() => setShowWindowSub3(!showWindowSub3)}>
                                 3
                             </Button>
