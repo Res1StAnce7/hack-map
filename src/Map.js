@@ -32,8 +32,8 @@ function MyComponent() {
     const [showWindowSub3, setShowWindowSub3] = React.useState(false)
     const [center, setCenter] = React.useState({lat: 40.756219, lng: -73.98641})
     const [map, setMap] = React.useState(null)
-    const [distance, setDistance] = React.useState('unknown')
-    const [duration, setDuration] = React.useState('unknown')
+    const [distance, setDistance] = React.useState('--')
+    const [duration, setDuration] = React.useState('--')
     const [directionsResponse, setDirectionsResponse] = React.useState(null)
     const [showHeatmap, setShowHeatmap] = React.useState(false);
     /** @type React.MutableRefObject<HTMLInputElement> */
@@ -101,22 +101,22 @@ function MyComponent() {
                         streetViewControl: false
                     }}>
                     {showHeatmap && <HeatmapLayer data={makeAndSetData()} options={{opacity: 0.8}} />}
-                    {center.lat !== null && center.lng !== null && (
-                        <Marker position={center}
-                            icon={{
-                                url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-                            }}
-                        />
-                    )}
+                    {center.lat !== null && center.lng !== null &&
+                        (<Marker position={center}
+                                 options={{title: 'Current Location', draggable: true}}
+                                onDragEnd={(e) => {setCenter({
+                                    lat: e.latLng.lat(),
+                                    lng: e.latLng.lng()})}}
+                    />)}
                     {directionsResponse && (<DirectionsRenderer directions={directionsResponse} />)}
                 </GoogleMap>
             </Box>
-            <Box p={5} borderRadius={"2xl"} m={5} bgColor='#FBFBF5' shadow='1px 2px 9px #ADD8E6'
-                minW='container.md' zIndex='1' position={'absolute'} top={'0px'} left={'0px'}>
-                <HStack spacing={2} justifyContent='space-between'>
+            <Box p={5} borderRadius={"3xl"} m={5} bgColor='#FBFBF5' shadow='1px 2px 9px #ADD8E6'
+                minW='container.md' zIndex='1' position={'absolute'} top={'0px'} left={'0px'} width={'800px'}>
+                <HStack spacing={3} justifyContent='space-between'>
                     <Box flexGrow={1} shadow={'sm'}>
                         <Autocomplete>
-                            <Input type='text' placeholder='Current Location' ref={originRef} />
+                            <Input type='text' placeholder='Origin' ref={originRef} />
                         </Autocomplete>
                     </Box>
                     <Box flexGrow={1} shadow={'sm'} >
@@ -125,36 +125,35 @@ function MyComponent() {
                         </Autocomplete>
                     </Box>
                     <ButtonGroup>
-                        <Button colorScheme='blue' type='submit' onClick={calculateRoute}>
+                        <Button colorScheme='blue'
+                                type='submit'
+                                style={{width: 180 }}
+                                onClick={calculateRoute}>
                             Calculate Route
                         </Button>
-                        <IconButton
-                            aria-label='center back'
-                            icon={<FaTimes />}
-                            onClick={clearRoute}
-                        />
+                        <IconButton aria-label='center back' icon={<FaTimes />} onClick={clearRoute}/>
                     </ButtonGroup>
                 </HStack>
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
                     <ButtonGroup>
-                        <IconButton
+                        <IconButton style={{ height: 48, width: 48 }}
                             aria-label='center back'
                             icon={<RiAlarmWarningFill />}
                             isRound
                         />
-                        <IconButton
+                        <IconButton style={{ height: 48, width: 48 }}
                             aria-label='center back'
                             icon={<WarningTwoIcon />}
                             isRound
                             onClick={() => setShowWindowMain(!showWindowMain)}/>
-                        <IconButton
+                        <IconButton style={{ height: 48, width: 48 }}
                             aria-label='center back'
                             icon={<FaLocationArrow />}
                             isRound
                             onClick={() => setCurrentLocation()}/>
-                        <IconButton
+                        <IconButton style={{ height: 48, width: 48 }}
                             aria-label={'center back'}
                             icon={<FaMap />}
                             isRound
@@ -222,7 +221,7 @@ function MyComponent() {
                     <ModalCloseButton />
                     <ModalHeader>Emergency</ModalHeader>
                     <ModalBody style={{display: "flex", flexDirection: "column"}}>
-                        <Text style={{marginTop:"150px"}}>Police is on the way</Text>
+                        <Text style={{marginTop:"150px"}}>Help is on the way</Text>
                     </ModalBody>
                 </ModalContent>
             </Modal>)}
