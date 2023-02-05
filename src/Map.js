@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { useRef } from 'react'
 import {GoogleMap, useJsApiLoader, Autocomplete,
-    DirectionsRenderer, Marker, HeatmapLayer, InfoWindow} from '@react-google-maps/api';
+    DirectionsRenderer, Marker, HeatmapLayer} from '@react-google-maps/api';
 import {
     Box,
     Button,
@@ -11,7 +11,7 @@ import {
     IconButton,
     Input,
     Text,
-    Modal, CloseButton, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalContent, ModalFooter, Checkbox,
+    Modal, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalContent, ModalFooter,
 } from '@chakra-ui/react'
 import {FaLocationArrow, FaMap, FaTimes} from 'react-icons/fa'
 import {RiAlarmWarningFill} from 'react-icons/ri'
@@ -20,6 +20,9 @@ const containerStyle = {
     width: '100%',
     height: '100%'
 };
+
+let heatMapData = [];
+let data = false;
 
 function MyComponent() {
     const { isLoaded } = useJsApiLoader({
@@ -36,7 +39,6 @@ function MyComponent() {
     const [duration, setDuration] = React.useState('--')
     const [directionsResponse, setDirectionsResponse] = React.useState(null)
     const [showHeatmap, setShowHeatmap] = React.useState(false);
-    const [data, setData] = React.useState(false);
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
@@ -88,18 +90,19 @@ function MyComponent() {
         destinationRef.current.value = ''
     }
 
-
     function makeAndSetData() {
-        let heatMapData = [];
-        for (let i = 0; i < 100; i++) {
-            heatMapData.push({
-                // eslint-disable-next-line no-undef
-                location: new google.maps.LatLng(
-                    center.lat + Math.random() / 100,
-                    center.lng + Math.random() / 100
-                ),
-                weight: Math.random() * 100,
-            });
+        if (!data) {
+            for (let i = 0; i < 10000; i++) {
+                heatMapData.push({
+                    // eslint-disable-next-line no-undef
+                    location: new google.maps.LatLng(
+                        center.lat + 2 * ((Math.random() > 0.5) ? 1 : -1) * Math.random() / 100,
+                        center.lng + 2 * ((Math.random() > 0.5) ? 1 : -1) * Math.random() / 100
+                    ),
+                    weight: Math.random() * 100,
+                });
+            }
+            data = true;
         }
         return heatMapData;
     }
