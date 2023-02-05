@@ -15,6 +15,7 @@ const containerStyle = {
 
 let heatMapData = [];
 let data = false;
+const myLibrary = ['places', 'directions', 'geometry', 'visualization'];
 
 function MyComponent() {
     const { isLoaded } = useJsApiLoader({
@@ -22,7 +23,7 @@ function MyComponent() {
         language: 'en',
         region: 'US',
         googleMapsApiKey: "AIzaSyCbibYU79CUknzovDk7S1ZGoBF9oCeEx9Y",
-        libraries:['places', 'directions', 'geometry', 'visualization']
+        libraries: myLibrary
     })
     const [showWindowMain, setShowWindowMain] = React.useState(false)
     const [showWindowSub1, setShowWindowSub1] = React.useState(false)
