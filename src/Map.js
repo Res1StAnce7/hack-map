@@ -170,15 +170,15 @@ function MyComponent() {
                         <ModalBody style={{display: "flex", flexDirection: "column"}}>
                             <Button variant="ghost" colorScheme={"blue"} style={{height: "90px"}}
                                     onClick={() => setShowWindowSub1(!showWindowSub1)}>
-                                1
+                                Report
                             </Button>
                             <Button variant="ghost" colorScheme={"yellow"} style={{marginTop: "50px", height: "90px"}}
                                     onClick={() => setShowWindowSub2(!showWindowSub2)}>
-                                2
+                                Notify
                             </Button>
                             <Button variant="ghost" colorScheme={"red"} style={{marginTop: "50px", height: "90px"}}
                                 onClick={() => setShowWindowSub3(!showWindowSub3)}>
-                                3
+                                Emergency
                             </Button>
                         </ModalBody>
                     </ModalContent>
@@ -210,7 +210,7 @@ function MyComponent() {
                 <ModalOverlay />
                 <ModalContent style={{textAlign: "center", width: "500px", height: "500px"}}>
                     <ModalCloseButton />
-                    <ModalHeader>Call 911</ModalHeader>
+                    <ModalHeader>Emergy</ModalHeader>
                     <ModalBody style={{display: "flex", flexDirection: "column"}}>
                         <Text style={{marginTop:"150px"}}>Police is on the way</Text>
                     </ModalBody>
